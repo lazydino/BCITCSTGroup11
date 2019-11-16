@@ -19,8 +19,8 @@ from util import convert_to_rgb, compose_imgs, plot_grid
 class Pix2Pix():
     def _print_network(self,l_out):
         for layer in get_all_layers(l_out):
-            print layer, layer.output_shape, "" if not hasattr(layer, 'nonlinearity') else layer.nonlinearity
-        print "# learnable params:", count_params(layer, trainable=True)
+            print (layer, layer.output_shape, "" if not hasattr(layer, 'nonlinearity') else layer.nonlinearity)
+        print ("# learnable params:", count_params(layer, trainable=True))
     def __init__(self,
                  gen_fn_dcgan, disc_fn_dcgan,
                  gen_params_dcgan, disc_params_dcgan,
@@ -76,13 +76,13 @@ class Pix2Pix():
         p2p_gen = gen_fn_p2p(in_shp, is_a_grayscale, is_b_grayscale, **gen_params_p2p)
         p2p_disc = disc_fn_p2p(in_shp, is_a_grayscale, is_b_grayscale, **disc_params_p2p)
         if verbose:
-            print "p2p gen:"
+            print ("p2p gen:")
             self._print_network(dcgan_gen)
-            print "p2p disc:"
+            print ("p2p disc:")
             self._print_network(dcgan_disc)
-            print "p2p gen:"
+            print ("p2p gen:")
             self._print_network(p2p_gen)
-            print "p2p disc:"
+            print ("p2p disc:")
             self._print_network(p2p_disc["out"])
         Z = T.fmatrix('Z') # noise var
         X = T.tensor4('X') # A
@@ -127,7 +127,7 @@ class Pix2Pix():
         disc_params_p2p = get_all_params(p2p_disc["out"], trainable=True)
         # --------------------
         if verbose:
-            print "train_mode: %s" % train_mode
+            print ("train_mode: %s" % train_mode)
         if train_mode == 'both':
             updates = opt(gen_loss_dcgan, gen_params_dcgan, **opt_args) # update dcgan generator
             updates.update(opt(disc_loss_dcgan, disc_params_dcgan, **opt_args)) # update dcgan discriminator
@@ -234,10 +234,10 @@ class Pix2Pix():
         f = open("%s/results.txt" % out_dir, "wb" if not resume else "a")
         if not resume:
             f.write(",".join(header)+"\n"); f.flush()
-            print ",".join(header)
+            print (",".join(header))
         else:
             if self.verbose:
-                print "loading weights from: %s" % resume
+                print ("loading weights from: %s" % resume)
             self.load_model(resume)
         #cb = ReduceLROnPlateau(self.lr,verbose=self.verbose)
         for e in range(num_epochs):
@@ -260,7 +260,7 @@ class Pix2Pix():
             out_str.append(str(time()-t0))
             out_str.append(self.train_mode)
             out_str = ",".join(out_str)
-            print out_str
+            print (out_str)
             f.write("%s\n" % out_str); f.flush()
             if self.train_mode in ['both', 'p2p']:
                 # plot an NxN grid of [A, predict(A)]
@@ -423,3 +423,4 @@ class Pix2Pix():
                     imsave(arr=this_a_img, fname="%s/a_%s.png" % (out_dir, d))
                     imsave(arr=this_b_img, fname="%s/b_%s.png" % (out_dir, d))                
                 ctr += 1
+

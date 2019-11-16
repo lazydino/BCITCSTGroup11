@@ -1,8 +1,8 @@
 #####################################
 ## Keras classes ported to Lasagne ##
 #####################################
-
 import numpy as np
+import warnings
 
 class ReduceLROnPlateau:
     """Reduce learning rate when a metric has stopped improving.
@@ -120,4 +120,4 @@ if __name__ == '__main__':
     cb.on_epoch_end(1.41, 3)
     for i in range(1, 10):
         cb.on_epoch_end(1.41, 3+i)
-    print lr.get_value()
+    print (lr.get_value())
