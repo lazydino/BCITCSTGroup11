@@ -1,0 +1,18 @@
+conda create --name demo python=3.4
+
+conda install libpython 
+conda install m2w64-toolchain
+conda install numpy
+conda install theano
+ ->keras_ports
+
+
+
+conda install blas
+conda install matplotlib
+conda install keras
+
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install tensorflow
+pip install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
