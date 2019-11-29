@@ -7,7 +7,8 @@ from lasagne.updates import *
 from lasagne.utils import floatX
 from util import Hdf5Iterator
 
-def get_iterators(dataset, batch_size, is_a_grayscale, is_b_grayscale, da=True):
+
+def get_iterators(dataset, batch_size=1, is_a_grayscale=True, is_b_grayscale=True, da=True):
     dataset = h5py.File(dataset,"r")
     if da:
         imgen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True, rotation_range=360, fill_mode="reflect")
@@ -128,4 +129,4 @@ if __name__ == '__main__':
 
             
             
-    locals()[ sys.argv[1] ]( sys.argv[2] )
+    locals()[ sys.argv[1] ]( sys.argv[2] ) #insert path for h5 file for argv[2]

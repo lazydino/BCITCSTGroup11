@@ -1,7 +1,7 @@
 import os
 import random
 import numpy as np
-import cPickle as pickle
+import _pickle as pickle
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -119,14 +119,15 @@ if __name__ == '__main__':
 
     from keras.preprocessing.image import ImageDataGenerator
     import h5py
-    dataset = h5py.File("/data/lisa/data/cbeckham/textures_v2_90-10.h5","r")
+    dataset = h5py.File("./textures_v2_brown500_with_valid.h5", "r")
     imgen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True, rotation_range=360, fill_mode="reflect")
     #N = dataset['xt'].shape[0]
     it_train = Hdf5Iterator(X=dataset['xt'][0:10],
                             y=dataset['yt'][0:10],
                             bs=2,
                             imgen=imgen,
-                            is_a_binary=True,
-                            is_b_binary=False)
+                            is_a_grayscale=True,
+                            is_b_grayscale=False
+                            )
     import pdb
     pdb.set_trace()
